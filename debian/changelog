@@ -1,0 +1,73 @@
+openscribe (1.1-0ubuntu3~xenial1) xenial; urgency=medium
+
+  * Added gksu as a dependency
+  * Updated gtkmm dependency version
+  * Publish for Xenial series
+
+ -- Matt Pharoah <mtpharoah@gmail.com>  Sun, 17 Apr 2016 13:38:43 -0400
+
+openscribe (1.1-0ubuntu2~trusty1) trusty; urgency=low
+
+  * Fixed dependency issue that prevented OpenScribe from being installed on systems with a newer version of udev
+  * Changed default audio chunk size from 15ms to 25ms to prevent audio crackling on slower systems
+  * Changed error message when unable to load an audio file to be more informative
+
+ -- Matt Pharoah <mtpharoah@gmail.com>  Sat, 06 Dec 2014 17:06:24 -0500
+
+openscribe (1.1-0ubuntu1~trusty1) trusty; urgency=low
+
+  * All footpedals should now be supported!
+
+ -- Matt Pharoah <mtpharoah@gmail.com>  Mon, 10 Nov 2014 14:18:52 -0500
+
+openscribe (1.0-0ubuntu7~trusty2) trusty; urgency=low
+
+  * Package SoX dependency changed from libsox1b to (libsox2 OR libsox1b)
+
+ -- Matt Pharoah <mtpharoah@gmail.com>  Fri, 07 Nov 2014 17:12:30 -0500
+
+openscribe (1.0-0ubuntu7~trusty1) trusty; urgency=low
+
+  * Fixed missing #include that resulted in a build error on gcc 4.7 or newer
+  * Publish for Trusty series
+
+ -- Matt Pharoah <mtpharoah@gmail.com>  Sat, 25 Oct 2014 21:17:03 -0400
+
+openscribe (1.0-0ubuntu6) precise; urgency=low
+
+  * Fixed a potential stack overflow when slowing audio
+
+ -- Matt Pharoah <mtpharoah@gmail.com>  Tue, 21 Oct 2014 16:48:39 -0400
+
+openscribe (1.0-0ubuntu5) precise; urgency=low
+
+  * Fixed minor memory leak
+  * Improved UI of configuration window
+  * Limit size of audio file name label to prevent main window resizing
+
+ -- Matt Pharoah <mtpharoah@gmail.com>  Sun, 19 Oct 2014 16:04:49 -0400
+
+openscribe (1.0-0ubuntu4) precise; urgency=low
+
+  * Fixed freeze when changing options while an audio file is loaded
+
+ -- Matt Pharoah <mtpharoah@gmail.com>  Fri, 17 Oct 2014 23:58:33 -0400
+
+openscribe (1.0-0ubuntu3) precise; urgency=low
+
+  * Fixed typo in previous patch (version should be Version)
+
+ -- Matt Pharoah <mtpharoah@gmail.com>  Fri, 17 Oct 2014 22:55:36 -0400
+
+openscribe (1.0-0ubuntu2) precise; urgency=low
+
+  * Fixed Debian package to install openscribe.desktop
+  * This should fix OpenScribe not being added to the application menu and as an audio player
+
+ -- Matt Pharoah <mtpharoah@gmail.com>  Fri, 17 Oct 2014 22:31:55 -0400
+
+openscribe (1.0-0ubuntu1) precise; urgency=low
+
+  * Initial release
+
+ -- Matt Pharoah <mtpharoah@gmail.com>  Thu, 16 Oct 2014 21:41:13 -0400

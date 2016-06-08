@@ -1,0 +1,12 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=OpenScribe
+Exec=openscribe %f
+Icon=/usr/share/OpenScribe/icons/OpenScribe.svg
+Terminal=false
+MimeType=audio/ogg;audio/flac;audio/mpeg;audio/mp4;audio/aiff;audio/wav;audio/amr-wb;audio/basic;audio/adpcm;audio/voc;audio/x-aiff;audio/x-gsm;audio/x-wav;audio/x-mp3;audio/x-aac;audio/x-au;audio/x-mpeg;audio/x-adpcm;audio/x-voc;
+Categories=AudioVideo;Audio;Player;GTK;
+

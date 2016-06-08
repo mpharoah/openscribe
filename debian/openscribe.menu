@@ -1,0 +1,5 @@
+?package(openscribe):needs="X11" section="Applications/Sound"\
+  title="OpenScribe" command="/usr/bin/openscribe"\
+  icon16x16="/usr/share/pixmaps/openscribe16.xpm"\
+  icon32x32="/usr/share/pixmaps/openscribe32.xpm"
+
