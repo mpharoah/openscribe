@@ -5,6 +5,7 @@ Maintainer: Matt Pharoah <mtpharoah@gmail.com>
 Build-Depends: debhelper (>= 8.0.0), libpulse-dev (>= 1.1.1), libsox-dev (>= 14.3.2), libsonic-dev, libgtkmm-3.0-dev (>= 3.4.0), libudev-dev
 Standards-Version: 3.9.3.1
 Homepage: http://www.openscribe.ca
+Vcs-Browser: https://github.com/mpharoah/openscribe
 
 
 Package: openscribe
