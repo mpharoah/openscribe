@@ -53,13 +53,13 @@ class OptionsWindow : public Gtk::Window {
 	Gtk::SpinButton skipBackSpinner;
 	Gtk::CheckButton soundEffectsCheckbox, skipBackCheckbox;
 	Gtk::HScale rwdSlider, ffwdSlider, slowSlider;
-	Gtk::HScale chunkSizeSlider, preloadSlider, historySlider;
+	Gtk::HScale latencySlider, preloadSlider, historySlider;
 	Gtk::Button cancel, apply, okay;
 
 	Gtk::Label seconds;
 	Gtk::Label rwdLabel, ffwdLabel, slowLabel;
 	Gtk::Label advOptLabel, advOptInfoLabel;
-	Gtk::Label chunkSizeLabel, preloadLabel, historyLabel;
+	Gtk::Label latencyLabel, preloadLabel, historyLabel;
 
 	void applyOptions() const;
 	void applyAndClose() { applyOptions(); hide(); }
@@ -93,7 +93,7 @@ class OptionsWindow : public Gtk::Window {
 		slowLabel.set_markup("<b>Default Slow Speed</b>");
 		advOptLabel.set_markup("<b><big>Advanced Options</big></b>");
 		advOptInfoLabel.set_markup("<i>You do not need to adjust these settings unless you experience audio stuttering, audio latency, or delayed foot pedal response. Mouse over each slider for information.</i>");
-		chunkSizeLabel.set_markup("<b>Audio Chunk Size</b>");
+		latencyLabel.set_markup("<b>Target Audio Latency</b>");
 		historyLabel.set_markup("<b>Audio History Size</b>");
 		preloadLabel.set_markup("<b>Audio Preload Size</b>");
 		cancel.set_label("Cancel");
@@ -120,10 +120,10 @@ class OptionsWindow : public Gtk::Window {
 		slowSlider.set_draw_value(true);
 		slowSlider.set_value_pos(Gtk::POS_TOP);
 		slowSlider.set_round_digits(2);
-		chunkSizeSlider.set_range(10.0, 60.0);
-		chunkSizeSlider.set_draw_value(true);
-		chunkSizeSlider.set_value_pos(Gtk::POS_TOP);
-		chunkSizeSlider.set_round_digits(0);
+		latencySlider.set_range(10.0, 60.0);
+		latencySlider.set_draw_value(true);
+		latencySlider.set_value_pos(Gtk::POS_TOP);
+		latencySlider.set_round_digits(0);
 		historySlider.set_range(1.0, 13.0);
 		historySlider.set_draw_value(true);
 		historySlider.set_value_pos(Gtk::POS_TOP);
@@ -152,7 +152,7 @@ class OptionsWindow : public Gtk::Window {
 		sep4.set_margin_bottom(8);
 		indent.set_size_request(32, 1);
 
-		chunkSizeSlider.set_tooltip_text("Set how much audio is sent to the PulseAudio sound server at once. Also sets the PulseAudio buffer size to double this amount. A lower value means lower latency and better responsiveness, but setting it too low may cause stuttering on slow computers. Default value is 15ms.");
+		latencySlider.set_tooltip_text("The desired audio latency in milliseconds. A lower value means better responsiveness, but setting it too low may cause stuttering on slow computers. Default value is 25ms.");
 		historySlider.set_tooltip_text("Sets the maximum length of audio that is kept in memory after it has played. Skipping back further than this means that the audio will need to be decoded from the file again, which causes a slight pause. It is highly recommended to set this to at least 3 to 5 seconds. For a typical audio file, each second of history saved increases memory usage by about 1/3rd of a megabyte (exact value depends on sample rate and number of channels). Default value is 6 seconds.");
 		preloadSlider.set_tooltip_text("Since decoding audio from a file takes time, OpenScribe decodes audio from the file ahead of the current position so that the data will be decoded and ready to play by the time the audio is needed. This slider sets how far ahead of the current position OpenScribe should go when preparing audio for playback. The actual amount of audio in memory that is ahead of the current position can be larger than this value if the user skips back (since the audio history we skipped past is now in the future). There is little benefit to making this a large value unless you are running another process in the background with irregular CPU usage. Default value is 2 seconds.");
 
@@ -185,8 +185,8 @@ class OptionsWindow : public Gtk::Window {
 					AOLayout.pack_start(advOptLabel);
 					AOLayout.pack_start(advOptInfoLabel);
 					AOLayout.pack_start(sep2);
-					AOLayout.pack_start(chunkSizeLabel);
-					AOLayout.pack_start(chunkSizeSlider);
+					AOLayout.pack_start(latencyLabel);
+					AOLayout.pack_start(latencySlider);
 					AOLayout.pack_start(sep3);
 					AOLayout.pack_start(historyLabel);
 					AOLayout.pack_start(historySlider);
@@ -212,7 +212,7 @@ class OptionsWindow : public Gtk::Window {
 		rwdSlider.signal_format_value().connect(sigc::mem_fun(*this, &OptionsWindow::formatTimes));
 		ffwdSlider.signal_format_value().connect(sigc::mem_fun(*this, &OptionsWindow::formatTimes));
 		slowSlider.signal_format_value().connect(sigc::mem_fun(*this, &OptionsWindow::formatPercent));
-		chunkSizeSlider.signal_format_value().connect(sigc::mem_fun(*this, &OptionsWindow::formatMilliseconds));
+		latencySlider.signal_format_value().connect(sigc::mem_fun(*this, &OptionsWindow::formatMilliseconds));
 		preloadSlider.signal_format_value().connect(sigc::mem_fun(*this, &OptionsWindow::formatSeconds));
 		historySlider.signal_format_value().connect(sigc::mem_fun(*this, &OptionsWindow::formatSeconds));
 	}

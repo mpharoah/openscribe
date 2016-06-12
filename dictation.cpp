@@ -33,7 +33,7 @@ void Dictation::openFile(const char *fname, const Options &opt) {
 	}
 
 	try {
-		reader = new AudioFileReader(fname, opt.chunkSize, opt.historySize, opt.preloadSize);
+		reader = new AudioFileReader(fname, opt.latency, opt.historySize, opt.preloadSize);
 	} catch (const std::invalid_argument &ex) {
 		readLock.unlock();
 		writeLock.unlock();
