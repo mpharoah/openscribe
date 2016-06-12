@@ -126,15 +126,6 @@ void Dictation::closeFile() {
 HOT void Dictation::fetchAudioData(pa_stream *stream, size_t bytes, void *myself) {
 	Dictation *me = (Dictation*) myself;
 
-	/*
-	 * The value PulseAudio provides for bytes is rubbish. It doesn't matter, though, since
-	 * the buffer attributes set minreq to BUFFER_BYTES, and this is the most that audioFileReader
-	 * is set to handle, so we always want to reader BUFFER_BYTES = BUFFER_FRAMES * sizeof(float) bytes.
-	 *
-	 * If it does happen to be too much, pa_stream_begin_write should adjust it to a lower value
-	 */
-	bytes = me->BUFFER_FRAMES * sizeof(float);
-
 	void *data;
 	pa_stream_begin_write(stream, &data, &bytes);
 
