@@ -81,7 +81,7 @@ class ChangelogWindow : public Gtk::Window {
 
 			CHANGELOG_ENTRY("Fixed dependency issue that prevented OpenScribe from being installed on\n"
 							"systems with a newer version of udev")
-			CHANGELOG_ENTRY("Changed default audio chunk size from 15ms to 25ms to prevent audio crackling\n"
+			CHANGELOG_ENTRY("Changed default audio latency from 15ms to 25ms to prevent audio crackling\n"
 							"on slower systems")
 			CHANGELOG_ENTRY("Changed error message when unable to load an audio file to be more informative")
 		}

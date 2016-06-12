@@ -34,7 +34,7 @@ void OptionsWindow::applyOptions() const {
 	options.rewindSpeed = (unsigned short)(1 << (int)rwdSlider.get_value());
 	options.fastForwardSpeed = (unsigned short)(1 << (int)ffwdSlider.get_value());
 	options.slowSpeed = (float)slowSlider.get_value();
-	options.chunkSize = (unsigned)chunkSizeSlider.get_value();
+	options.latency = (unsigned)latencySlider.get_value();
 	options.historySize = (unsigned)historySlider.get_value();
 	options.preloadSize = (unsigned)preloadSlider.get_value();
 
@@ -56,7 +56,7 @@ void OptionsWindow::on_show() {
 	rwdSlider.set_value(std::log2((double)options.rewindSpeed));
 	ffwdSlider.set_value(std::log2((double)options.fastForwardSpeed));
 	slowSlider.set_value(options.slowSpeed);
-	chunkSizeSlider.set_value((double)options.chunkSize);
+	latencySlider.set_value((double)options.latency);
 	historySlider.set_value((double)options.historySize);
 	preloadSlider.set_value((double)options.preloadSize);
 	Gtk::Window::on_show();

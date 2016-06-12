@@ -33,7 +33,7 @@ void Dictation::openFile(const char *fname, const Options &opt) {
 	}
 
 	try {
-		reader = new AudioFileReader(fname, opt.chunkSize, opt.historySize, opt.preloadSize);
+		reader = new AudioFileReader(fname, opt.latency, opt.historySize, opt.preloadSize);
 	} catch (const std::invalid_argument &ex) {
 		readLock.unlock();
 		writeLock.unlock();
@@ -65,8 +65,8 @@ void Dictation::openFile(const char *fname, const Options &opt) {
 
 	pa_buffer_attr bufferInfo;
 	bufferInfo.maxlength = 2*BUFFER_BYTES;
-	bufferInfo.tlength = 2*BUFFER_BYTES;
-	bufferInfo.minreq = BUFFER_BYTES;
+	bufferInfo.tlength = BUFFER_BYTES;
+	bufferInfo.minreq = (uint32_t) -1;
 	bufferInfo.prebuf = BUFFER_BYTES;
 
 	paLoop = pa_mainloop_new();
@@ -81,7 +81,7 @@ void Dictation::openFile(const char *fname, const Options &opt) {
 	//wait for for the context to become ready
 	while (pa_context_get_state(paContext) != PA_CONTEXT_READY) pa_mainloop_iterate(paLoop, true, &unused);
 
-	pa_stream_connect_playback(audioStream, NULL, &bufferInfo, PA_STREAM_NOFLAGS, NULL, NULL);
+	pa_stream_connect_playback(audioStream, NULL, &bufferInfo, PA_STREAM_ADJUST_LATENCY, NULL, NULL);
 	pa_stream_set_write_callback(audioStream, fetchAudioData, (void*)this);
 
 	//wait for the stream to become ready
@@ -125,15 +125,6 @@ void Dictation::closeFile() {
 
 HOT void Dictation::fetchAudioData(pa_stream *stream, size_t bytes, void *myself) {
 	Dictation *me = (Dictation*) myself;
-
-	/*
-	 * The value PulseAudio provides for bytes is rubbish. It doesn't matter, though, since
-	 * the buffer attributes set minreq to BUFFER_BYTES, and this is the most that audioFileReader
-	 * is set to handle, so we always want to reader BUFFER_BYTES = BUFFER_FRAMES * sizeof(float) bytes.
-	 *
-	 * If it does happen to be too much, pa_stream_begin_write should adjust it to a lower value
-	 */
-	bytes = me->BUFFER_FRAMES * sizeof(float);
 
 	void *data;
 	pa_stream_begin_write(stream, &data, &bytes);

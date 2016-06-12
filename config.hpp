@@ -33,7 +33,7 @@ struct Options {
 	unsigned skipBackOnPlay;
 	float slowSpeed;
 
-	unsigned chunkSize;
+	unsigned latency;
 	unsigned historySize;
 	unsigned preloadSize;
 };

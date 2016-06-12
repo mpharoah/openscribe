@@ -85,8 +85,8 @@ Options loadOptions(const Version &version) {
 			conf >> opt.playSoundEffects;
 			if (!conf.good()) opt.playSoundEffects = DefaultOptions.playSoundEffects;
 		} else if (std::strcmp(line, "Chunk Size") == 0) {
-			conf >> opt.chunkSize;
-			if (!conf.good() || opt.chunkSize < 10 || opt.chunkSize > 60) opt.chunkSize = DefaultOptions.chunkSize;
+			conf >> opt.latency;
+			if (!conf.good() || opt.latency < 10 || opt.latency > 60) opt.latency = DefaultOptions.latency;
 		} else if (std::strcmp(line, "Buffer Remember Size") == 0) {
 			conf >> opt.historySize;
 			if (!conf.good() || opt.historySize > 13 || opt.historySize == 0) opt.historySize = DefaultOptions.historySize;
@@ -102,15 +102,15 @@ Options loadOptions(const Version &version) {
 
 	if (version < Version(1,0,0)) {
 		/* When upgrading from QTranscribe, reset the advanced options to their new defaults */
-		opt.chunkSize = DefaultOptions.chunkSize;
+		opt.latency = DefaultOptions.latency;
 		opt.historySize = DefaultOptions.historySize;
 		opt.preloadSize = DefaultOptions.preloadSize;
 		optionsChanged = true;
 	}
 
 	if (version < Version(1,1,2)) {
-		/* Version 1.1-2 changed default chunk size from 15ms to 25ms */
-		if (opt.chunkSize == 15) opt.chunkSize = 25;
+		/* Version 1.1-2 changed default latency from 15ms to 25ms */
+		if (opt.latency == 15) opt.latency = 25;
 		optionsChanged = true;
 	}
 
@@ -129,7 +129,7 @@ void saveOptions(const Options &opt) {
 	conf << "Rewind Speed = " << opt.rewindSpeed << std::endl;
 	conf << "Fast Forward Speed = " << opt.fastForwardSpeed << std::endl;
 	conf << "Slow Speed = " << opt.slowSpeed << std::endl;
-	conf << "Chunk Size = " << opt.chunkSize << std::endl;
+	conf << "Chunk Size = " << opt.latency << std::endl;
 	conf << "Buffer Remember Size = " << opt.historySize << std::endl;
 	conf << "Buffer Preprocess Size = " << opt.preloadSize << std::endl;
 	conf.close();
