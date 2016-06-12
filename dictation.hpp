@@ -92,7 +92,7 @@ class Dictation {
 	void getFilename(char **dest) const;
 
 	/*
-	 * I could modify AudioFileReader to allow for chunkSize, historySize, and preloadSize
+	 * I could modify AudioFileReader to allow for latency, historySize, and preloadSize
 	 * to be changed without restarting the dictation, but this function is only called
 	 * when the user closes the options window, so I'll take the easy route and just close
 	 * and re-open the file

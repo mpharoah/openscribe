@@ -37,7 +37,7 @@
 #include "changelog.hpp"
 
 int main(int argc, char *argv[]) {
-	Glib::RefPtr<Gtk::Application> program = Gtk::Application::create(argc, argv, "gtk.OpenScribe", Gio::APPLICATION_HANDLES_OPEN);
+	Glib::RefPtr<Gtk::Application> program = Gtk::Application::create("gtk.OpenScribe", Gio::APPLICATION_HANDLES_OPEN);
 
 	Version lastUsed = getLastVersionUsed();
 	if (lastUsed == Version(0) && QTranscribeInstalled()) {
@@ -83,10 +83,7 @@ int main(int argc, char *argv[]) {
 	ChangelogWindow changelog(lastUsed);
 	if (lastUsed != CURRENT_VERSION && lastUsed != Version(0)) {
 		changelog.show();
-		int fake_argc = 1;
-		char *temp = argv[0];
-		char **fake_argv = &temp;
-		Gtk::Application::create(fake_argc, fake_argv, "gtk.OpenScribe", Gio::APPLICATION_HANDLES_OPEN)->run(changelog);
+		Gtk::Application::create("gtk.OpenScribe", Gio::APPLICATION_HANDLES_OPEN)->run(changelog);
 	}
 
 	if (FPC.start(	MainWindow::onPedalEventAdaptor, ConfigWindow::onDeviceConnectAdaptor,
