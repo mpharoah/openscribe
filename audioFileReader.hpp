@@ -129,11 +129,14 @@ class AudioFileReader {
 
 			//top off the buffer
 			while (inPos < outPos + bufferSize) {
-				sonicWriteFloatToStream(stretcher, (float*) reader->readData(inPos, reader->getMaxRequestBytes()), numMultiSamples);
-				inPos += reader->getMaxRequestBytes() / sizeof(float);
+				const size_t requestMultiSamples = reader->getMaxRequestBytes() / (reader->fileInfo.numChannels * sizeof(float));
+				const size_t requestBytes = requestMultiSamples * reader->fileInfo.numChannels * sizeof(float);
+				
+				sonicWriteFloatToStream(stretcher, (float*)reader->readData(inPos, requestBytes), requestMultiSamples);
+				inPos += requestBytes / sizeof(float);
 			}
 
-			//if there aren't enough samples reader, wait for sonic to process them
+			//if there aren't enough samples ready, wait for sonic to process them
 			while ((unsigned) sonicSamplesAvailable(stretcher) < numMultiSamples) std::this_thread::yield();
 			sonicReadFloatFromStream(stretcher, (float*)dest, numMultiSamples);
 			outPos += (unsigned) ((float) numSamples * speed);
