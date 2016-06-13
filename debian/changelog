@@ -1,3 +1,13 @@
+openscribe (1.2-0~xenial1) xenial; urgency=medium
+
+  * Fixed audio crackling in Ubuntu 16.04
+  * Changed audio buffer settings to fix buffer underruns
+  * Fixed freeze when opening OpenScribe with a command line argument
+  * Fixed freeze when opening OpenScribe from the Open With dialog in a file browser
+  * Fixed changelog window to have proper word wrapping
+
+ -- Matt Pharoah <mtpharoah@gmail.com>  Sun, 12 Jun 2016 22:42:30 -0400
+
 openscribe (1.1-0ubuntu3~xenial1) xenial; urgency=medium
 
   * Added gksu as a dependency
