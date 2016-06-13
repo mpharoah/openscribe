@@ -23,8 +23,7 @@
 #include <cstring>
 
 std::ostream &operator<<(std::ostream &out, const Version &ver) {
-	out << ver.major << '.' << ver.minor;
-	if (ver.ubuntu != 0) out << "-0ubuntu" << ver.ubuntu;
+	out << ver.major << '.' << ver.minor << '.' << ver.patch;
 	return out;
 }
 
@@ -34,13 +33,17 @@ std::istream &operator>>(std::istream &in, Version &ver) {
 
 	vstring = vstring.substr(vstring.find_first_not_of(" \n\t"));
 	vstring = vstring.substr(0, vstring.find_last_not_of(" \n\t")+1);
+	
+	ver.major = 0;
+	ver.minor = 0;
+	ver.patch = 0;
 
 	if (vstring.size() == 0) {
 		in.setstate(std::istream::failbit);
 		return in;
 	}
 
-	unsigned long major, minor, ubuntu;
+	unsigned long major, minor, patch;
 
 	size_t dot = vstring.find_first_of('.');
 	try {
@@ -61,7 +64,7 @@ std::istream &operator>>(std::istream &in, Version &ver) {
 	ver.major = (unsigned short) major;
 	if (dot == std::string::npos) {
 		ver.minor = 0;
-		ver.ubuntu = 0;
+		ver.patch = 0;
 		return in;
 	}
 
@@ -71,9 +74,9 @@ std::istream &operator>>(std::istream &in, Version &ver) {
 		return in;
 	}
 
-	size_t dash = vstring.find_first_of('-');
+	dot = vstring.find_first_of(".-");
 	try {
-		minor = std::stoul(vstring.substr(0, dash));
+		minor = std::stoul(vstring.substr(0, dot));
 	} catch (const std::invalid_argument&) {
 		in.setstate(std::istream::failbit);
 		return in;
@@ -88,19 +91,24 @@ std::istream &operator>>(std::istream &in, Version &ver) {
 	}
 
 	ver.minor = (unsigned short) minor;
-	if (dash == std::string::npos) {
-		ver.ubuntu = 0;
+	if (dot == std::string::npos) {
+		ver.patch = 0;
 		return in;
 	}
 
-	vstring = vstring.substr(dash);
-	if (vstring.size() < 9 || vstring[1] != '0' || vstring[2] != 'u' || vstring[3] != 'b' || vstring[4] != 'u' || vstring[5] != 'n' || vstring[6] != 't' || vstring[7] != 'u') {
+	vstring = vstring.substr(dot+1);
+	if (vstring.find("0ubuntu") == 0) {
+		//Compatability with earlier version numbering scheme
+		vstring = vstring.substr(7);
+	}
+	
+	if (vstring.size() == 0) {
 		in.setstate(std::istream::failbit);
 		return in;
 	}
 
 	try {
-		ubuntu = std::stoul(vstring.substr(8));
+		patch = std::stoul(vstring);
 	} catch (const std::invalid_argument&) {
 		in.setstate(std::istream::failbit);
 		return in;
@@ -109,12 +117,13 @@ std::istream &operator>>(std::istream &in, Version &ver) {
 		return in;
 	}
 
-	if (ubuntu > 0xffff) {
+	if (patch > 0xffff) {
 		in.setstate(std::istream::failbit);
 		return in;
 	}
 
-	ver.ubuntu = (unsigned short) ubuntu;
+	ver.patch = (unsigned short)patch;
+	
 	return in;
 }
 
