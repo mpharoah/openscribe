@@ -94,6 +94,17 @@ class ChangelogWindow : public Gtk::Window {
 
 		// put other versions here, with newer versions at the top
 
+		/* Version 1.2.0 */
+		if (since < Version(1,2,0)) {
+			addChangelogSection("1.2.0");
+
+			addChangelogEntry("Fixed audio crackling in Ubuntu 16.04");
+			addChangelogEntry("Changed audio buffer settings to fix buffer underruns");
+			addChangelogEntry("Fixed freeze when opening OpenScribe with a command line argument");
+			addChangelogEntry("Fixed freeze when opening OpenScribe from the Open With dialog in a file browser");
+			addChangelogEntry("Fixed changelog window to have proper word wrapping");
+		}
+
 		/* Version 1.1.2 */
 		if (since < Version(1,1,2)) {
 			addChangelogSection("1.1.2");

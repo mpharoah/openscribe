@@ -31,42 +31,41 @@
 struct Version {
 	unsigned short major;
 	unsigned short minor;
-	unsigned short ubuntu;
+	unsigned short patch;
 
 	INLINE Version() {}
-	INLINE Version(unsigned short maj, unsigned short min = 0, unsigned short ub = 0) {
+	INLINE Version(unsigned short maj, unsigned short min = 0, unsigned short pch = 0) {
 		major = maj;
 		minor = min;
-		ubuntu = ub;
+		patch = pch;
 	}
 	INLINE ~Version() {}
 
 	INLINE operator Glib::ustring() const {
-		if (ubuntu == 0) return Glib::ustring::compose("%1.%2", major, minor);
-		return Glib::ustring::compose("%1.%2-0ubuntu%3", major, minor, ubuntu);
+		return Glib::ustring::compose("%1.%2.%3", major, minor, patch);
 	}
 
 	INLINE bool operator<(const Version &other) const {
-		return (major < other.major || (major == other.major && (minor < other.minor || (minor == other.minor && ubuntu < other.ubuntu))));
+		return (major < other.major || (major == other.major && (minor < other.minor || (minor == other.minor && patch < other.patch))));
 	}
 	INLINE bool operator>(const Version &other) const {
-		return (major > other.major || (major == other.major && (minor > other.minor || (minor == other.minor && ubuntu > other.ubuntu))));
+		return (major > other.major || (major == other.major && (minor > other.minor || (minor == other.minor && patch > other.patch))));
 	}
 	INLINE bool operator==(const Version &other) const {
-		return (major == other.major && minor == other.minor && ubuntu == other.ubuntu);
+		return (major == other.major && minor == other.minor && patch == other.patch);
 	}
 	INLINE bool operator!=(const Version &other) const {
-		return (major != other.major || minor != other.minor || ubuntu != other.ubuntu);
+		return (major != other.major || minor != other.minor || patch != other.patch);
 	}
 	INLINE bool operator<=(const Version &other) const {
-		return (major < other.major || (major == other.major && (minor < other.minor || (minor == other.minor && ubuntu <= other.ubuntu))));
+		return (major < other.major || (major == other.major && (minor < other.minor || (minor == other.minor && patch <= other.patch))));
 	}
 	INLINE bool operator>=(const Version &other) const {
-		return (major > other.major || (major == other.major && (minor > other.minor || (minor == other.minor && ubuntu >= other.ubuntu))));
+		return (major > other.major || (major == other.major && (minor > other.minor || (minor == other.minor && patch >= other.patch))));
 	}
 };
 
-static const Version CURRENT_VERSION = Version{1,1,2};
+static const Version CURRENT_VERSION = Version{1,2,0};
 
 std::ostream &operator<<(std::ostream &out, const Version &ver);
 std::istream &operator>>(std::istream &in, Version &ver);
