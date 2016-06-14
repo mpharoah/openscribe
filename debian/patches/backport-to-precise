@@ -1,0 +1,41 @@
+Description: Backport to Ubuntu 12.04 (Precise)
+ .
+ openscribe (1.2-0~precise1) precise; urgency=low
+ .
+   * Backport to Ubuntu 12.04 (Precise)
+Author: Matt Pharoah <mtpharoah@gmail.com>
+
+--- openscribe-1.2.orig/main.cpp
++++ openscribe-1.2/main.cpp
+@@ -23,6 +23,7 @@
+ 
+ #include <fstream>
+ #include <vector>
++#include <cstring>
+ 
+ #include "windowList.hpp"
+ #include "dictation.hpp"
+@@ -37,7 +38,13 @@
+ #include "changelog.hpp"
+ 
+ int main(int argc, char *argv[]) {
+-	Glib::RefPtr<Gtk::Application> program = Gtk::Application::create("gtk.OpenScribe", Gio::APPLICATION_HANDLES_OPEN);
++	char *invocation = new char[std::strlen(argv[0])+1];
++	std::strcpy(invocation, argv[0]);
++
++	int gtk_argc = 1;
++	char **gtk_argv = &invocation;
++
++	Glib::RefPtr<Gtk::Application> program = Gtk::Application::create(gtk_argc, gtk_argv, "gtk.OpenScribe", Gio::APPLICATION_HANDLES_OPEN);
+ 
+ 	Version lastUsed = getLastVersionUsed();
+ 	if (lastUsed == Version(0) && QTranscribeInstalled()) {
+@@ -83,7 +90,7 @@ int main(int argc, char *argv[]) {
+ 	ChangelogWindow changelog(lastUsed);
+ 	if (lastUsed != CURRENT_VERSION && lastUsed != Version(0)) {
+ 		changelog.show();
+-		Gtk::Application::create("gtk.OpenScribe", Gio::APPLICATION_HANDLES_OPEN)->run(changelog);
++		Gtk::Application::create(gtk_argc, gtk_argv, "gtk.OpenScribe", Gio::APPLICATION_HANDLES_OPEN)->run(changelog);
+ 	}
+ 
+ 	if (FPC.start(	MainWindow::onPedalEventAdaptor, ConfigWindow::onDeviceConnectAdaptor,

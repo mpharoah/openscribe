@@ -1,3 +1,9 @@
+openscribe (1.2-0~precise1) precise; urgency=low
+
+  * Backport to Ubuntu 12.04 (Precise)
+
+ -- Matt Pharoah <mtpharoah@gmail.com>  Mon, 13 Jun 2016 23:07:53 -0400
+
 openscribe (1.2-0~xenial1) xenial; urgency=medium
 
   * Fixed audio crackling in Ubuntu 16.04
