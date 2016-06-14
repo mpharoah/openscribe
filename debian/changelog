@@ -1,3 +1,9 @@
+openscribe (1.2-0~trusty1) trusty; urgency=low
+
+  * Backport to Ubuntu 14.04 (Trusty)
+
+ -- Matt Pharoah <mtpharoah@gmail.com>  Mon, 13 Jun 2016 20:33:24 -0400
+
 openscribe (1.2-0~xenial1) xenial; urgency=medium
 
   * Fixed audio crackling in Ubuntu 16.04
