@@ -901,7 +901,7 @@ void ConfigWindow::onPermissionChangeButtonPressed() {
 
 		// add the current user to the list of users allowed to read from the device
 		char *cmd = new char[307];
-		std::snprintf(cmd, 307, "gksudo 'setfacl -m u:%s:r /dev/input/event%d'", username, currentDevice);
+		std::snprintf(cmd, 307, "pkexec setfacl -m u:%s:r /dev/input/event%d", username, currentDevice);
 
 		if (std::system(cmd) == 0) {
 			// success

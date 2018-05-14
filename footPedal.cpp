@@ -623,7 +623,7 @@ void FootPedalCoordinator::deviceChange(char *fname, const uint32_t &event, bool
 
 							// add the current user to the list of users allowed to read from the device
 							char *cmd = new char[453];
-							std::snprintf(cmd, 453, "gksudo -m 'A configured device has been detected, but it is protected. Enter your password to allow OpenScribe to read from the connected input device.' 'setfacl -m u:%s:r %s'", username, fullname);
+							std::snprintf(cmd, 453, "pkexec setfacl -m u:%s:r %s", username, fullname);
 
 							if (std::system(cmd) == 0) {
 								// success

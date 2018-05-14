@@ -65,7 +65,7 @@ struct Version {
 	}
 };
 
-static const Version CURRENT_VERSION = Version{1,2,0};
+static const Version CURRENT_VERSION = Version{1,2,1};
 
 std::ostream &operator<<(std::ostream &out, const Version &ver);
 std::istream &operator>>(std::istream &in, Version &ver);

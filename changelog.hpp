@@ -95,6 +95,13 @@ class ChangelogWindow : public Gtk::Window {
 		// put other versions here, with newer versions at the top
 
 		/* Version 1.2.0 */
+		if (since < Version(1,2,1)) {
+			addChangelogSection("1.2.1");
+
+			addChangelogEntry("Released for Ubuntu 18.04");
+			addChangelogEntry("Switched from gksu to pkexec");
+		}
+		
 		if (since < Version(1,2,0)) {
 			addChangelogSection("1.2.0");
 
