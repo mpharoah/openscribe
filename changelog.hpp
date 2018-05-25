@@ -75,14 +75,22 @@ class ChangelogWindow : public Gtk::Window {
 
 		// put other versions here, with newer versions at the top
 
-		/* Version 1.2.0 */
-		if (since < Version(1,2,1)) {
-			addChangelogSection("1.2.1");
+		/* Version 1.3.0 */
+		if (since < Version(1,3,1)) {
+			addChangelogSection("1.3.1");
+
+			addChangelogEntry("Fixed package dependencies to also accept libsox3 instead of just libsox2");
+		}
+		
+		/* Version 1.3.0 */
+		if (since < Version(1,3,0)) {
+			addChangelogSection("1.3.0");
 
 			addChangelogEntry("Released for Ubuntu 18.04");
 			addChangelogEntry("Switched from gksu to pkexec");
 		}
 		
+		/* Version 1.2.0 */
 		if (since < Version(1,2,0)) {
 			addChangelogSection("1.2.0");
 
