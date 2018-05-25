@@ -1,3 +1,9 @@
+openscribe (1.3-1~bionic1) bionic; urgency=medium
+
+  * Fixed package dependencies to also accept libsox3 instead of just libsox2
+
+ -- Matt Pharoah <mtpharoah@gmail.com>  Fri, 25 May 2018 17:58:12 -0400
+
 openscribe (1.3-0~bionic1) bionic; urgency=medium
 
   * Release for Ubuntu 18.04 Bionic Beaver
